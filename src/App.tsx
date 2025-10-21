@@ -4,6 +4,7 @@ import LoginPage from '@pages/LoginPage';
 import RegisterPage from '@pages/RegisterPage';
 import DemoPage from '@pages/DemoPage';
 import DashboardPage from '@pages/DashboardPage';
+import CustomerMenuPage from '@pages/CustomerMenuPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/demo" element={<DemoPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/menu/:restaurantId" element={<CustomerMenuPage />} />
       </Routes>
     </Router>
   );
