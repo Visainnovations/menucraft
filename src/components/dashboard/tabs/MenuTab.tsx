@@ -3,6 +3,7 @@ import { Plus, Search, ChevronDown, ChevronRight, Edit2, Trash2, Image, Star, Fl
 import { Restaurant, Category, MenuItem } from '@/types/dashboard.types';
 import { t } from '@utils/translations';
 import Button from '@components/ui/Button';
+import ItemFormModal from '@components/dashboard/ItemFormModal';
 
 interface MenuTabProps {
   restaurant: Restaurant;
@@ -15,6 +16,7 @@ interface MenuTabProps {
 }
 
 export default function MenuTab({ 
+  restaurant,
   categories, 
   items, 
   onUpdateItems,
@@ -23,6 +25,8 @@ export default function MenuTab({
 }: MenuTabProps) {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(categories[0]?.id || null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [showItemModal, setShowItemModal] = useState(false);
+  const [editingItem, setEditingItem] = useState<MenuItem | null>(null);
 
   const getCategoryItems = (categoryId: string) => {
     return items.filter(item => item.categoryId === categoryId);
@@ -32,6 +36,28 @@ export default function MenuTab({
     cat.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     cat.nameTamil?.includes(searchTerm)
   );
+
+  const handleAddItem = () => {
+    setEditingItem(null);
+    setShowItemModal(true);
+  };
+
+  const handleEditItem = (item: MenuItem) => {
+    setEditingItem(item);
+    setShowItemModal(true);
+  };
+
+  const handleSaveItem = (item: MenuItem) => {
+    if (editingItem) {
+      // Update existing item
+      onUpdateItems(items.map(i => i.id === item.id ? item : i));
+    } else {
+      // Add new item
+      onUpdateItems([...items, item]);
+    }
+    setShowItemModal(false);
+    setEditingItem(null);
+  };
 
   const handleDeleteItem = (itemId: string) => {
     if (confirm(lang === 'en' ? 'Delete this item?' : 'இந்த உணவை நீக்கவா?')) {
@@ -65,7 +91,7 @@ export default function MenuTab({
             {t('addCategory', lang)}
           </Button>
           <Button 
-            onClick={() => alert('Add item feature coming soon!')} 
+            onClick={handleAddItem} 
             disabled={!canAccess}
             size="sm"
           >
@@ -120,7 +146,7 @@ export default function MenuTab({
                           key={item.id}
                           item={item}
                           lang={lang}
-                          onEdit={() => alert('Edit feature coming soon!')}
+                          onEdit={() => handleEditItem(item)}
                           onDelete={() => handleDeleteItem(item.id)}
                           canAccess={canAccess}
                         />
@@ -133,6 +159,21 @@ export default function MenuTab({
           );
         })}
       </div>
+
+      {/* Item Form Modal */}
+      {showItemModal && (
+        <ItemFormModal
+          item={editingItem}
+          categories={categories}
+          restaurant={restaurant}
+          onClose={() => {
+            setShowItemModal(false);
+            setEditingItem(null);
+          }}
+          onSave={handleSaveItem}
+          lang={lang}
+        />
+      )}
     </div>
   );
 }
