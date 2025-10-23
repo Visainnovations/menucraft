@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { MapPin, Phone, Share2 } from 'lucide-react';
 import {
   CustomerRestaurant,
@@ -10,6 +11,9 @@ import {
 } from '@/types/customer.types';
 import MenuItemCard from './MenuItemCard';
 import ClosedBanner from './ClosedBanner';
+import AdvertisementCarousel from './AdvertisementCarousel';
+import FoodCategoryCarousel from './FoodCategoryCarousel';
+import RestaurantBanner from './RestaurantBanner';
 
 interface CustomerMenuContentProps {
   restaurant: CustomerRestaurant;
@@ -31,6 +35,7 @@ export default function CustomerMenuContent({
   restaurant,
   categories,
   items,
+  advertisements,
   lang,
   searchTerm,
   selectedTimeFilter,
@@ -41,6 +46,8 @@ export default function CustomerMenuContent({
   onToggleFavorite,
   onSelectItem,
 }: CustomerMenuContentProps) {
+  const [activeCategoryId, setActiveCategoryId] = useState<string | undefined>();
+  
   const cardBg = isDark ? 'bg-gray-800' : 'bg-white/80 backdrop-blur-sm';
   const textColor = isDark ? 'text-white' : 'text-gray-900';
   const textMuted = isDark ? 'text-gray-400' : 'text-gray-600';
@@ -73,12 +80,28 @@ export default function CustomerMenuContent({
 
   const filteredItems = getFilteredItems();
 
+  const handleCategoryClick = (categoryId: string) => {
+    setActiveCategoryId(categoryId);
+    const element = document.getElementById(`category-${categoryId}`);
+    if (element) {
+      const offset = 140; // Adjust based on your header + filters height
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: elementPosition - offset,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return (
     <div className="px-4 py-4 pb-20">
       {/* Closed Banner */}
       {currentTimeSlot === 'closed' && (
         <ClosedBanner restaurant={restaurant} lang={lang} isDark={isDark} />
       )}
+
+      {/* Restaurant Banner Image - Static shop image */}
+      <RestaurantBanner restaurant={restaurant} lang={lang} isDark={isDark} />
 
       {/* Restaurant Info Card */}
       <div className={`mb-4 ${cardBg} rounded-2xl shadow-md p-4 border ${borderColor}`}>
@@ -122,6 +145,29 @@ export default function CustomerMenuContent({
           </div>
         </div>
       </div>
+
+      {/* Advertisement Banner - Only show when NOT searching */}
+      {!searchTerm && advertisements.length > 0 && (
+        <AdvertisementCarousel
+          advertisements={advertisements}
+          lang={lang}
+          isDark={isDark}
+          primaryColor={primaryColor}
+        />
+      )}
+
+      {/* Food Category Carousel - Only show when NOT searching */}
+      {!searchTerm && (
+        <FoodCategoryCarousel
+          categories={categories}
+          selectedTimeFilter={selectedTimeFilter}
+          lang={lang}
+          isDark={isDark}
+          primaryColor={primaryColor}
+          onCategoryClick={handleCategoryClick}
+          activeCategoryId={activeCategoryId}
+        />
+      )}
 
       {/* Search Results */}
       {searchTerm && (
@@ -212,12 +258,17 @@ export default function CustomerMenuContent({
       <div className={`mt-8 pt-6 border-t ${borderColor} text-center space-y-3`}>
         <div className="flex items-center justify-center gap-2 text-xs" style={{ color: primaryColor }}>
           <span className={textMuted}>{lang === 'en' ? 'Powered by' : 'இயக்குவது'}</span>
-          <span className="font-bold">MenuCraft</span>
+          <span className="font-bold">Visainnovations</span>
         </div>
         <p className={`text-[10px] ${textMuted} italic px-4`}>
           {lang === 'en'
             ? '✨ Scan, Browse, Savor - Your Digital Dining Companion'
             : '✨ ஸ்கேன் செய்யுங்கள், உலாவுங்கள், சுவைக்கவும்'}
+        </p>
+        <p className={`text-[8px] ${textMuted} px-4`}>
+          {lang === 'en'
+            ? '♥️ Made with love • 🌿 Eco-friendly'
+            : '♥️ காதலுடன் உருவாக்கப்பட்டது • 🌿 சுற்றுச்சூழலுக்கு உகந்தது'}
         </p>
       </div>
     </div>

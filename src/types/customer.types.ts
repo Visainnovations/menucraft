@@ -6,6 +6,7 @@ export interface CustomerRestaurant {
   phone: string;
   address: string;
   addressTamil: string;
+  bannerImage?: string;
   timings: {
     morning: { start: string; end: string };
     evening: { start: string; end: string };

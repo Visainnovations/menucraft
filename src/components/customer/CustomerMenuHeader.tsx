@@ -45,23 +45,26 @@ export default function CustomerMenuHeader({
               {lang === 'en' ? restaurant.name : restaurant.nameTamil}
             </h1>
             <div className="flex items-center gap-2 mt-1">
+              {/* OPEN/CLOSED Badge */}
               <div
-                className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full ${
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full ${
                   isOpen
-                    ? 'bg-green-100 dark:bg-green-900/30'
-                    : 'bg-red-100 dark:bg-red-900/30'
+                    ? isDark ? 'bg-green-900/30' : 'bg-green-50'
+                    : isDark ? 'bg-red-900/30' : 'bg-red-50'
                 }`}
               >
                 <div
-                  className={`w-1.5 h-1.5 rounded-full ${
-                    isOpen ? 'bg-green-500 animate-pulse' : 'bg-red-500'
+                  className={`w-2 h-2 rounded-full ${
+                    isOpen 
+                      ? isDark ? 'bg-green-500 animate-pulse' : 'bg-green-600 animate-pulse'
+                      : isDark ? 'bg-red-500' : 'bg-red-600'
                   }`}
                 ></div>
                 <span
-                  className={`text-[10px] font-bold ${
+                  className={`text-xs font-extrabold ${
                     isOpen
-                      ? 'text-green-700 dark:text-green-400'
-                      : 'text-red-700 dark:text-red-400'
+                      ? isDark ? 'text-green-400' : 'text-green-700'
+                      : isDark ? 'text-red-400' : 'text-red-700'
                   }`}
                 >
                   {isOpen
