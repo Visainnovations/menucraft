@@ -68,8 +68,8 @@ export default function CustomerMenuHeader({
                   }`}
                 >
                   {isOpen
-                    ? lang === 'en' ? 'OPEN' : 'திறந்து'
-                    : lang === 'en' ? 'CLOSED' : 'மூடி'}
+                    ? lang === 'en' ? 'OPEN' : 'திறந்து உள்ளது'
+                    : lang === 'en' ? 'CLOSED' : 'மூடி உள்ளது'}
                 </span>
               </div>
             </div>

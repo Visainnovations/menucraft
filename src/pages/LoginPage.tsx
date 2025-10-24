@@ -37,7 +37,7 @@ export default function LoginPage() {
       // Store in localStorage
       localStorage.setItem('userRole', 'admin');
       localStorage.setItem('userEmail', email);
-      navigate('/admin/dashboard');
+      navigate('/admin');
       return;
     }
 

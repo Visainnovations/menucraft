@@ -5,6 +5,7 @@ import RegisterPage from '@pages/RegisterPage';
 import DemoPage from '@pages/DemoPage';
 import DashboardPage from '@pages/DashboardPage';
 import CustomerMenuPage from '@pages/CustomerMenuPage';
+import SuperAdminDashboardPage from './pages/SuperAdminDashboardPage';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/demo" element={<DemoPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/menu/:restaurantId" element={<CustomerMenuPage />} />
+        <Route path="/admin" element={<SuperAdminDashboardPage />} />
       </Routes>
     </Router>
   );
