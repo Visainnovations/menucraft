@@ -49,3 +49,37 @@ export interface DashboardData {
   categories: Category[];
   items: MenuItem[];
 }
+
+export interface NutritionFacts {
+  calories?: number;
+  protein?: number;
+  carbs?: number;
+  fat?: number;
+  fiber?: number;
+  sugar?: number;
+}
+
+export interface MenuItem {
+  id: string;
+  name: string;
+  nameTamil?: string;
+  description?: string;
+  price: number;
+  categoryId: string;
+  isChefsSpecial?: boolean;
+  isTodaysSpecial?: boolean;
+  isSeasonal?: boolean;
+  isVeg?: boolean;
+  spiceLevel?: number;
+  availableTimes: string[];
+  viewCount: number;
+  imageUrl?: string;
+  // New optional fields
+  ingredients?: string[];
+  nutritionFacts?: NutritionFacts;
+  allergens?: string[];
+  servingSize?: string;
+  servings?: number;
+  funFact?: string;
+  preparationTime?: number;
+}
