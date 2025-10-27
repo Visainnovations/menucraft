@@ -1,33 +1,35 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import DashboardLayout from '@components/dashboard/DashboardLayout';
-import DashboardHeader from '@components/dashboard/DashboardHeader';
-import SubscriptionBanner from '@components/dashboard/SubscriptionBanner';
-import StatsCards from '@components/dashboard/StatsCards';
-import TabNavigation from '@components/dashboard/TabNavigation';
-import MenuTab from '@components/dashboard/tabs/MenuTab';
-import TimeSlotsTab from '@components/dashboard/tabs/TimeSlotsTab';
-import QRCodeTab from '@components/dashboard/tabs/QRCodeTab';
-import AnalyticsTab from '@components/dashboard/tabs/AnalyticsTab';
-import SettingsTab from '@components/dashboard/tabs/SettingsTab';
-import { Restaurant, Category, MenuItem } from '@/types/dashboard.types';
-import { getRestaurantData, saveRestaurantData } from '@utils/dashboardStorage';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import DashboardLayout from "@components/dashboard/DashboardLayout";
+import DashboardHeader from "@components/dashboard/DashboardHeader";
+import SubscriptionBanner from "@components/dashboard/SubscriptionBanner";
+import StatsCards from "@components/dashboard/StatsCards";
+import TabNavigation from "@components/dashboard/TabNavigation";
+import MenuTab from "@components/dashboard/tabs/MenuTab";
+import TimeSlotsTab from "@components/dashboard/tabs/TimeSlotsTab";
+import QRCodeTab from "@components/dashboard/tabs/QRCodeTab";
+import AnalyticsTab from "@components/dashboard/tabs/AnalyticsTab";
+import SettingsTab from "@components/dashboard/tabs/SettingsTab";
+import { Restaurant, Category, MenuItem } from "@/types/dashboard.types";
+import { getRestaurantData, saveRestaurantData } from "@utils/dashboardStorage";
+import PlanComparisonModal from "@components/dashboard/PlanComparisonModal";
 
 export default function DashboardPage() {
   const navigate = useNavigate();
-  const [lang, setLang] = useState<'en' | 'ta'>('en');
-  const [activeTab, setActiveTab] = useState('menu');
+  const [lang, setLang] = useState<"en" | "ta">("en");
+  const [activeTab, setActiveTab] = useState("menu");
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [items, setItems] = useState<MenuItem[]>([]);
+  const [showPlanModal, setShowPlanModal] = useState(false);
 
   useEffect(() => {
     // Check if user is logged in
-    const userRole = localStorage.getItem('userRole');
-    const userEmail = localStorage.getItem('userEmail');
-    
+    const userRole = localStorage.getItem("userRole");
+    const userEmail = localStorage.getItem("userEmail");
+
     if (!userRole || !userEmail) {
-      navigate('/login');
+      navigate("/login");
       return;
     }
 
@@ -38,7 +40,7 @@ export default function DashboardPage() {
     setItems(data.items);
   }, [navigate]);
 
-  const toggleLang = () => setLang(lang === 'en' ? 'ta' : 'en');
+  const toggleLang = () => setLang(lang === "en" ? "ta" : "en");
 
   const handleUpdateRestaurant = (updates: Partial<Restaurant>) => {
     if (!restaurant) return;
@@ -72,7 +74,7 @@ export default function DashboardPage() {
     );
   }
 
-  const canAccess = restaurant.subscriptionStatus !== 'expired';
+  const canAccess = restaurant.subscriptionStatus !== "expired";
 
   return (
     <DashboardLayout>
@@ -83,8 +85,12 @@ export default function DashboardPage() {
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        <SubscriptionBanner restaurant={restaurant} lang={lang} />
-        
+        <SubscriptionBanner
+          restaurant={restaurant}
+          lang={lang}
+          onShowPlanComparison={() => setShowPlanModal(true)}
+        />
+
         <StatsCards
           restaurant={restaurant}
           categories={categories}
@@ -100,7 +106,7 @@ export default function DashboardPage() {
           />
 
           <div className="p-4 sm:p-6">
-            {activeTab === 'menu' && (
+            {activeTab === "menu" && (
               <MenuTab
                 restaurant={restaurant}
                 categories={categories}
@@ -111,8 +117,8 @@ export default function DashboardPage() {
                 lang={lang}
               />
             )}
-            
-            {activeTab === 'timeSlots' && (
+
+            {activeTab === "timeSlots" && (
               <TimeSlotsTab
                 restaurant={restaurant}
                 onUpdate={handleUpdateRestaurant}
@@ -120,16 +126,16 @@ export default function DashboardPage() {
                 lang={lang}
               />
             )}
-            
-            {activeTab === 'qrCode' && (
+
+            {activeTab === "qrCode" && (
               <QRCodeTab restaurant={restaurant} lang={lang} />
             )}
-            
-            {activeTab === 'analytics' && (
+
+            {activeTab === "analytics" && (
               <AnalyticsTab items={items} lang={lang} />
             )}
-            
-            {activeTab === 'settings' && (
+
+            {activeTab === "settings" && (
               <SettingsTab
                 restaurant={restaurant}
                 onUpdate={handleUpdateRestaurant}
@@ -140,6 +146,13 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+
+      <PlanComparisonModal
+        currentPlan={restaurant.planType}
+        isOpen={showPlanModal}
+        onClose={() => setShowPlanModal(false)}
+        lang={lang}
+      />
     </DashboardLayout>
   );
 }
