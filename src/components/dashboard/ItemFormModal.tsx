@@ -28,6 +28,7 @@ export default function ItemFormModal({
     description: '',
     price: 0,
     categoryId: categories[0]?.id || '',
+    displayOrder: 1,
     isChefsSpecial: false,
     isTodaysSpecial: false,
     isSeasonal: false,

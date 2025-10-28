@@ -66,6 +66,7 @@ export interface MenuItem {
   description?: string;
   price: number;
   categoryId: string;
+  displayOrder?: number;
   isChefsSpecial?: boolean;
   isTodaysSpecial?: boolean;
   isSeasonal?: boolean;
