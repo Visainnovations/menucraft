@@ -61,6 +61,10 @@ export const translations: Record<string, Record<string, string>> = {
     soy: 'Soy',
     eggs: 'Eggs',
     seafood: 'Seafood',
+    latenight: 'Late Night',
+    earlymorning: 'Early Morning',
+    brunch: 'Brunch',
+    allday: 'All Day',
   },
   ta: {
     dashboard: 'டாஷ்போர்டு',
@@ -124,6 +128,10 @@ export const translations: Record<string, Record<string, string>> = {
     soy: 'சோயா',
     eggs: 'முட்டை',
     seafood: 'கடல் உணவு',
+    latenight: 'இரவு நேரம்',
+    earlymorning: 'அதிகாலை',
+    brunch: 'பிரஞ்ச்',
+    allday: 'முழு நாள்',
   },
 };
 

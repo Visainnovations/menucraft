@@ -1,3 +1,4 @@
+// Restaurant Types
 export interface Restaurant {
   id: string;
   name: string;
@@ -12,13 +13,15 @@ export interface Restaurant {
   timeSlots?: TimeSlot[];
 }
 
+// Time Slot Types
 export interface TimeSlot {
   id: string;
-  type: 'breakfast' | 'lunch' | 'snacks' | 'dinner';
+  type: 'breakfast' | 'lunch' | 'snacks' | 'dinner' | 'latenight' | 'earlymorning' | 'brunch' | 'allday';
   start: string;
   end: string;
 }
 
+// Category Types
 export interface Category {
   id: string;
   name: string;
@@ -27,29 +30,7 @@ export interface Category {
   availableTimes: string[];
 }
 
-export interface MenuItem {
-  id: string;
-  name: string;
-  nameTamil?: string;
-  description?: string;
-  price: number;
-  categoryId: string;
-  isChefsSpecial?: boolean;
-  isTodaysSpecial?: boolean;
-  isSeasonal?: boolean;
-  isVeg?: boolean;
-  spiceLevel?: number;
-  availableTimes: string[];
-  viewCount: number;
-  imageUrl?: string;
-}
-
-export interface DashboardData {
-  restaurant: Restaurant;
-  categories: Category[];
-  items: MenuItem[];
-}
-
+// Nutrition Facts Types
 export interface NutritionFacts {
   calories?: number;
   protein?: number;
@@ -59,6 +40,7 @@ export interface NutritionFacts {
   sugar?: number;
 }
 
+// Menu Item Types
 export interface MenuItem {
   id: string;
   name: string;
@@ -75,7 +57,7 @@ export interface MenuItem {
   availableTimes: string[];
   viewCount: number;
   imageUrl?: string;
-  // New optional fields
+  // Optional detailed information
   ingredients?: string[];
   nutritionFacts?: NutritionFacts;
   allergens?: string[];
@@ -83,4 +65,11 @@ export interface MenuItem {
   servings?: number;
   funFact?: string;
   preparationTime?: number;
+}
+
+// Dashboard Data Type
+export interface DashboardData {
+  restaurant: Restaurant;
+  categories: Category[];
+  items: MenuItem[];
 }
