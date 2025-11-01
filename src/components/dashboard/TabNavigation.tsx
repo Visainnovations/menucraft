@@ -1,4 +1,4 @@
-import { Menu, Clock, QrCode, BarChart, Settings } from 'lucide-react';
+import { Menu, Clock, QrCode, BarChart, Palette, Settings } from 'lucide-react';
 import { t } from '@utils/translations';
 
 interface TabNavigationProps {
@@ -13,6 +13,7 @@ export default function TabNavigation({ activeTab, onTabChange, lang }: TabNavig
     { id: 'timeSlots', icon: Clock, label: t('timeSlots', lang) },
     { id: 'qrCode', icon: QrCode, label: t('qrCode', lang) },
     { id: 'analytics', icon: BarChart, label: t('analytics', lang) },
+    { id: 'appearance', icon: Palette, label: t('appearance', lang) }, // 🆕 NEW TAB
     { id: 'settings', icon: Settings, label: t('settings', lang) },
   ];
 

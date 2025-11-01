@@ -1,8 +1,18 @@
 import { useState } from 'react';
-import { Save, Menu } from 'lucide-react';
+import { Save, Megaphone } from 'lucide-react';
 import { Restaurant } from '@/types/dashboard.types';
 import { t } from '@utils/translations';
 import Button from '@components/ui/Button';
+import AnnouncementManager from '@components/dashboard/AnnouncementManager';
+import {
+  BasicInfoSection,
+  ContactInfoSection,
+  LocationSection,
+  SocialMediaSection,
+  BrandingSection,
+  MenuTemplateSection,
+  SettingsSection,
+} from '@components/dashboard/settings/SettingsSections';
 
 interface SettingsTabProps {
   restaurant: Restaurant;
@@ -15,116 +25,152 @@ export default function SettingsTab({ restaurant, onUpdate, canAccess, lang }: S
   const [formData, setFormData] = useState({
     name: restaurant.name,
     nameTamil: restaurant.nameTamil,
+    phone: restaurant.phone || '',
+    email: restaurant.email || '',
+    address: restaurant.address || '',
+    addressTamil: restaurant.addressTamil || '',
+    socialMedia: restaurant.socialMedia || {
+      facebook: '',
+      instagram: '',
+      twitter: '',
+      youtube: '',
+      whatsapp: '',
+      website: '',
+    },
     primaryColor: restaurant.primaryColor || '#f97316',
     menuTemplate: restaurant.menuTemplate || 'template_1',
+    bannerImage: restaurant.bannerImage || '',
+    logoImage: restaurant.logoImage || '',
   });
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validate = (): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = lang === 'en' ? 'Restaurant name is required' : 'உணவக பெயர் தேவை';
+    }
+
+    if (formData.phone && !/^[+]?[0-9\s()-]{10,}$/.test(formData.phone)) {
+      newErrors.phone = lang === 'en' ? 'Invalid phone number' : 'தவறான தொலைபேசி எண்';
+    }
+
+    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = lang === 'en' ? 'Invalid email address' : 'தவறான மின்னஞ்சல் முகவரி';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleFieldChange = (field: string, value: string) => {
+    setFormData({ ...formData, [field]: value });
+    // Clear error for this field
+    if (errors[field]) {
+      const newErrors = { ...errors };
+      delete newErrors[field];
+      setErrors(newErrors);
+    }
+  };
+
+  const handleImageUpload = (field: 'bannerImage' | 'logoImage', e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setFormData({ ...formData, [field]: event.target?.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSave = () => {
+    if (!validate()) {
+      alert(lang === 'en' ? 'Please fix the errors' : 'பிழைகளை சரிசெய்யவும்');
+      return;
+    }
+
     onUpdate(formData);
     alert(lang === 'en' ? 'Settings saved successfully!' : 'அமைப்புகள் வெற்றிகரமாக சேமிக்கப்பட்டன!');
   };
 
   return (
-    <div className="max-w-2xl space-y-6">
-      <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6">
-        <h3 className="font-bold text-gray-900 mb-4">
-          {lang === 'en' ? 'Restaurant Information' : 'உணவக தகவல்'}
-        </h3>
-        <div className="space-y-4">
-          <div>
-            <label className="text-sm font-medium text-gray-700 block mb-2">
-              {lang === 'en' ? 'Restaurant Name (English)' : 'உணவக பெயர் (English)'}
-            </label>
-            <input
-              type="text"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              disabled={!canAccess}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 disabled:bg-gray-100"
-            />
-          </div>
-          
-          <div>
-            <label className="text-sm font-medium text-gray-700 block mb-2">
-              {lang === 'en' ? 'Restaurant Name (Tamil)' : 'உணவக பெயர் (தமிழ்)'}
-            </label>
-            <input
-              type="text"
-              value={formData.nameTamil}
-              onChange={(e) => setFormData({ ...formData, nameTamil: e.target.value })}
-              disabled={!canAccess}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 disabled:bg-gray-100"
-            />
-          </div>
+    <div className="max-w-4xl space-y-6">
+      {/* Basic Information */}
+      <BasicInfoSection
+        name={formData.name}
+        nameTamil={formData.nameTamil}
+        onChange={handleFieldChange}
+        errors={errors}
+        canAccess={canAccess}
+        lang={lang}
+      />
 
-          <div>
-            <label className="text-sm font-medium text-gray-700 block mb-2">
-              {lang === 'en' ? 'Primary Color' : 'முதன்மை நிறம்'}
-            </label>
-            <div className="flex gap-3">
-              <input
-                type="color"
-                value={formData.primaryColor}
-                onChange={(e) => setFormData({ ...formData, primaryColor: e.target.value })}
-                disabled={!canAccess}
-                className="w-20 h-10 border border-gray-300 rounded-lg disabled:opacity-50 cursor-pointer"
-              />
-              <input
-                type="text"
-                value={formData.primaryColor}
-                onChange={(e) => setFormData({ ...formData, primaryColor: e.target.value })}
-                disabled={!canAccess}
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 disabled:bg-gray-100"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Contact Information */}
+      <ContactInfoSection
+        phone={formData.phone}
+        email={formData.email}
+        onChange={handleFieldChange}
+        errors={errors}
+        canAccess={canAccess}
+        lang={lang}
+      />
 
-      <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6">
-        <h3 className="font-bold text-gray-900 mb-4">
-          {lang === 'en' ? 'Menu Template' : 'மெனு டெம்ப்ளேட்'}
-        </h3>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-          {['template_1', 'template_2', 'template_3'].map((template, idx) => {
-            const isPremium = idx > 0;
-            const isLocked = isPremium && restaurant.planType === 'basic';
-            const isSelected = formData.menuTemplate === template;
-            
-            return (
-              <button
-                key={template}
-                onClick={() => !isLocked && setFormData({ ...formData, menuTemplate: template })}
-                disabled={isLocked || !canAccess}
-                className={`
-                  relative border-2 rounded-lg p-4 aspect-square flex items-center justify-center
-                  transition-all
-                  ${isLocked ? 'border-gray-200 bg-gray-50 cursor-not-allowed' : 'border-gray-300 hover:border-primary-500'}
-                  ${isSelected ? 'border-primary-500 bg-primary-50' : ''}
-                `}
-              >
-                <div className="text-center">
-                  <Menu className="w-8 h-8 mx-auto mb-2 text-gray-400" />
-                  <p className="text-xs text-gray-600">
-                    {lang === 'en' ? 'Template' : 'டெம்ப்ளேட்'} {idx + 1}
-                  </p>
-                </div>
-                {isLocked && (
-                  <div className="absolute inset-0 bg-black bg-opacity-50 rounded-lg flex items-center justify-center">
-                    <span className="text-white text-xs font-semibold">
-                      {lang === 'en' ? 'Pro Plan' : 'Pro திட்டம்'}
-                    </span>
-                  </div>
-                )}
-              </button>
-            );
-          })}
-        </div>
-      </div>
+      {/* Location */}
+      <LocationSection
+        address={formData.address}
+        addressTamil={formData.addressTamil}
+        onChange={handleFieldChange}
+        canAccess={canAccess}
+        lang={lang}
+      />
 
-      <div className="flex justify-end">
-        <Button onClick={handleSave} disabled={!canAccess}>
-          <Save className="w-4 h-4" />
+      {/* Social Media */}
+      <SocialMediaSection
+        socialMedia={formData.socialMedia}
+        onChange={(socialMedia) => setFormData({ ...formData, socialMedia })}
+        canAccess={canAccess}
+        lang={lang}
+      />
+
+      {/* Branding */}
+      <BrandingSection
+        bannerImage={formData.bannerImage}
+        logoImage={formData.logoImage}
+        primaryColor={formData.primaryColor}
+        onImageUpload={handleImageUpload}
+        onColorChange={(color) => setFormData({ ...formData, primaryColor: color })}
+        canAccess={canAccess}
+        lang={lang}
+      />
+
+      {/* Menu Template */}
+      <MenuTemplateSection
+        selectedTemplate={formData.menuTemplate}
+        planType={restaurant.planType}
+        onSelect={(template) => setFormData({ ...formData, menuTemplate: template })}
+        canAccess={canAccess}
+        lang={lang}
+      />
+
+      {/* Announcements */}
+      <SettingsSection
+        icon={<Megaphone className="w-6 h-6 text-orange-600" />}
+        title={lang === 'en' ? 'Announcements & Updates' : 'அறிவிப்புகள் & புதுப்பிப்புகள்'}
+      >
+        <AnnouncementManager
+          announcements={restaurant.announcements || []}
+          onUpdate={(announcements) => onUpdate({ announcements })}
+          canAccess={canAccess}
+          lang={lang}
+        />
+      </SettingsSection>
+
+      {/* Save Button - Sticky */}
+      <div className="sticky bottom-0 bg-white/95 backdrop-blur py-4 border-t border-gray-200 -mx-4 px-4 sm:-mx-6 sm:px-6 flex justify-end">
+        <Button onClick={handleSave} disabled={!canAccess} size="lg">
+          <Save className="w-5 h-5" />
           {t('save', lang)} {t('settings', lang)}
         </Button>
       </div>

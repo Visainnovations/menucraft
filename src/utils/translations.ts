@@ -65,6 +65,57 @@ export const translations: Record<string, Record<string, string>> = {
     earlymorning: 'Early Morning',
     brunch: 'Brunch',
     allday: 'All Day',
+    // Appearance Tab
+    appearance: 'Appearance',
+    livePreview: 'Live Preview',
+    template: 'Template',
+    colors: 'Colors',
+    typography: 'Typography',
+    layout: 'Layout',
+    visibility: 'Visibility',
+    resetToDefault: 'Reset to Default',
+    saveChanges: 'Save Changes',
+    
+    // Templates
+    classic: 'Classic',
+    modern: 'Modern',
+    elegant: 'Elegant',
+    
+    // Colors
+    primary: 'Primary',
+    secondary: 'Secondary',
+    background: 'Background',
+    text: 'Text',
+    heading: 'Heading',
+    border: 'Border',
+    quickPresets: 'Quick Presets',
+    
+    // Typography
+    fontFamily: 'Font Family',
+    baseFontSize: 'Base Font Size',
+    
+    // Layout
+    cardStyle: 'Card Style',
+    spacing: 'Spacing',
+    imageSize: 'Image Size',
+    columns: 'Columns',
+    rounded: 'Rounded',
+    square: 'Square',
+    elevated: 'Elevated',
+    compact: 'Compact',
+    comfortable: 'Comfortable',
+    spacious: 'Spacious',
+    small: 'Small',
+    medium: 'Medium',
+    large: 'Large',
+    
+    // Visibility
+    showPrices: 'Show Prices',
+    showImages: 'Show Images',
+    showDescriptions: 'Show Descriptions',
+    showBadges: 'Show Badges',
+    showSpiceLevel: 'Show Spice Level',
+    showPrepTime: 'Show Prep Time',
   },
   ta: {
     dashboard: 'டாஷ்போர்டு',
@@ -132,6 +183,57 @@ export const translations: Record<string, Record<string, string>> = {
     earlymorning: 'அதிகாலை',
     brunch: 'பிரஞ்ச்',
     allday: 'முழு நாள்',
+    // Appearance Tab
+    appearance: 'தோற்றம்',
+    livePreview: 'நேரடி முன்னோட்டம்',
+    template: 'டெம்ப்ளேட்',
+    colors: 'நிறங்கள்',
+    typography: 'எழுத்துரு',
+    layout: 'அமைப்பு',
+    visibility: 'தெரிவுநிலை',
+    resetToDefault: 'இயல்புநிலைக்கு மீட்டமை',
+    saveChanges: 'மாற்றங்களை சேமி',
+    
+    // Templates
+    classic: 'கிளாசிக்',
+    modern: 'நவீன',
+    elegant: 'நேர்த்தியான',
+    
+    // Colors
+    primary: 'முதன்மை',
+    secondary: 'இரண்டாம்',
+    background: 'பின்னணி',
+    text: 'உரை',
+    heading: 'தலைப்பு',
+    border: 'எல்லை',
+    quickPresets: 'விரைவு முன்னமைவுகள்',
+    
+    // Typography
+    fontFamily: 'எழுத்துரு குடும்பம்',
+    baseFontSize: 'அடிப்படை எழுத்துரு அளவு',
+    
+    // Layout
+    cardStyle: 'கார்டு பாணி',
+    spacing: 'இடைவெளி',
+    imageSize: 'படம் அளவு',
+    columns: 'நெடுவரிசைகள்',
+    rounded: 'வட்டமான',
+    square: 'சதுரம்',
+    elevated: 'உயர்த்தப்பட்ட',
+    compact: 'சுருக்கமான',
+    comfortable: 'வசதியான',
+    spacious: 'விசாலமான',
+    small: 'சிறிய',
+    medium: 'நடுத்தர',
+    large: 'பெரிய',
+    
+    // Visibility
+    showPrices: 'விலைகளை காட்டு',
+    showImages: 'படங்களை காட்டு',
+    showDescriptions: 'விளக்கங்களை காட்டு',
+    showBadges: 'பேட்ஜ்களை காட்டு',
+    showSpiceLevel: 'காரத்தை காட்டு',
+    showPrepTime: 'நேரத்தை காட்டு',
   },
 };
 

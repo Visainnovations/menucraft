@@ -13,6 +13,7 @@ import SettingsTab from "@components/dashboard/tabs/SettingsTab";
 import { Restaurant, Category, MenuItem } from "@/types/dashboard.types";
 import { getRestaurantData, saveRestaurantData } from "@utils/dashboardStorage";
 import PlanComparisonModal from "@components/dashboard/PlanComparisonModal";
+import AppearanceTab from "@/components/dashboard/appearance/AppearanceTab";
 
 export default function DashboardPage() {
   const navigate = useNavigate();
@@ -133,6 +134,15 @@ export default function DashboardPage() {
 
             {activeTab === "analytics" && (
               <AnalyticsTab items={items} lang={lang} />
+            )}
+
+            {activeTab === 'appearance' && (
+              <AppearanceTab
+                restaurant={restaurant}
+                onUpdate={handleUpdateRestaurant}
+                canAccess={canAccess}
+                lang={lang}
+              />
             )}
 
             {activeTab === "settings" && (
