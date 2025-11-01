@@ -36,6 +36,7 @@ export interface Restaurant {
   // Announcements
   announcements?: Announcement[];
   appearance?: AppearanceSettings;
+  qrSettings?: QRCodeSettings;
 }
 
 // Announcement Type
@@ -214,4 +215,36 @@ export const DEFAULT_APPEARANCE: AppearanceSettings = {
     showSpiceLevel: true,
     showPrepTime: true,
   },
+};
+
+// ========================================
+// QR CODE CUSTOMIZATION TYPES
+// ========================================
+
+export interface QRCodeSettings {
+  size: number;              // 256, 512, 1024
+  fgColor: string;          // Foreground color
+  bgColor: string;          // Background color
+  errorCorrectionLevel: 'L' | 'M' | 'Q' | 'H';  // Error correction
+  includeMargin: boolean;   // Add quiet zone
+  style: 'squares' | 'dots' | 'rounded';  // QR style
+  logoEnabled: boolean;     // Show logo in center
+  logoSize: number;         // 20-40% of QR size
+  frameEnabled: boolean;    // Add decorative frame
+  frameText: string;        // Text below QR (e.g., "Scan to view menu")
+  frameTextTamil?: string;  // Tamil text
+}
+
+export const DEFAULT_QR_SETTINGS: QRCodeSettings = {
+  size: 512,
+  fgColor: '#000000',
+  bgColor: '#ffffff',
+  errorCorrectionLevel: 'H',
+  includeMargin: true,
+  style: 'squares',
+  logoEnabled: true,
+  logoSize: 25,
+  frameEnabled: true,
+  frameText: 'Scan to view our menu',
+  frameTextTamil: 'எங்கள் மெனுவைப் பார்க்க ஸ்கேன் செய்யவும்',
 };
