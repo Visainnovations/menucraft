@@ -2,7 +2,7 @@
 
 > Transform your restaurant with beautiful QR code menus. Update instantly, track performance, delight customers.
 
-![MenuCraft Banner](https://via.placeholder.com/1200x400/f97316/ffffff?text=MenuCraft)
+<!-- ![MenuCraft Banner](https://via.placeholder.com/1200x400/f97316/ffffff?text=MenuCraft) -->
 
 ---
 
@@ -234,10 +234,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👨‍💻 Author
 
-**Your Name**
-- Email: your.email@example.com
-- LinkedIn: [linkedin.com/in/yourprofile](https://linkedin.com/in/yourprofile)
-- Portfolio: [yourwebsite.com](https://yourwebsite.com)
+**Visainnovations**
+- Email: visainnovations123@gmail.com
+<!-- - LinkedIn: [linkedin.com/in/yourprofile](https://linkedin.com/in/yourprofile) -->
+- Portfolio: [visainnovations.com](https://visagansp.github.io/visainnovations/)
 
 ---
 
@@ -252,7 +252,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 Need help? 
-- 📧 Email: support@menucraft.com
+- 📧 Email: visainnovations123@gmail.com
 - 💬 Discord: [Join our community](https://discord.gg/menucraft)
 - 📚 Docs: [docs.menucraft.com](https://docs.menucraft.com)
 
