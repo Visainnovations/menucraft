@@ -11,6 +11,13 @@ export interface CustomerRestaurant {
     morning: { start: string; end: string };
     evening: { start: string; end: string };
   };
+  // Optional time slots from dashboard (dynamic)
+  timeSlots?: Array<{
+    id: string;
+    type: 'breakfast' | 'lunch' | 'snacks' | 'dinner' | 'latenight' | 'earlymorning' | 'brunch' | 'allday';
+    start: string;
+    end: string;
+  }>;
 }
 
 export interface CustomerCategory {

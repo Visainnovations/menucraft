@@ -60,6 +60,32 @@ export const getCustomerMenuData = (restaurantId: string): CustomerMenuData => {
         morning: { start: "7:00 AM", end: "11:30 AM" },
         evening: { start: "6:30 PM", end: "10:30 PM" },
       },
+      timeSlots: [
+        {
+          id: 'slot_1',
+          type: 'breakfast',
+          start: '07:00',
+          end: '11:00',
+        },
+        // {
+        //   id: 'slot_2',
+        //   type: 'brunch',
+        //   start: '11:00',
+        //   end: '14:00',
+        // },
+        // {
+        //   id: 'slot_3',
+        //   type: 'snacks',
+        //   start: '14:00',
+        //   end: '18:00',
+        // },
+        {
+          id: 'slot_4',
+          type: 'dinner',
+          start: '18:00',
+          end: '20:00',
+        },
+      ],
     },
     categories: [
       {
